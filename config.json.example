@@ -8,4 +8,6 @@
   "onlyNewImages": false,
   "onlyNewMetadata": false,
   "gracePeriodMins": 5
+  "appendTimestamp": false,
+  "splitOutputFolderBy": 0
 }

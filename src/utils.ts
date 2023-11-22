@@ -42,11 +42,9 @@ export async function getImageMetadata(
 }
 
 export async function saveImageMetadata(image: Image) {
+	const timestamp = config.appendTimestamp ? "_" + Date.now() : "";
 	return fs.writeFile(
-		join(
-			outputPaths.imageMetadata,
-			`${image.id}_${Date.now()}.json`
-		),
+		join(outputPaths.imageMetadata, `${image.id}${timestamp}.json`),
 		JSON.stringify(image),
 		"utf8"
 	);
@@ -99,11 +97,9 @@ export async function downloadImage(
 		return;
 	}
 	const extension = extname(metadata.representations.full);
+	const timestamp = config.appendTimestamp ? "_" + Date.now() : "";
 	const writeStream = createWriteStream(
-		join(
-			outputPaths.images,
-			`${metadata.id}_${Date.now()}${extension}`
-		)
+		join(outputPaths.images, `${metadata.id}${timestamp}${extension}`)
 	);
 	// @ts-ignore
 	await streamPipeline(image.body, writeStream);
