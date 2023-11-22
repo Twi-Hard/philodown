@@ -43,7 +43,10 @@ export async function getImageMetadata(
 
 export async function saveImageMetadata(image: Image) {
 	return fs.writeFile(
-		join(outputPaths.imageMetadata, `${image.id}.json`),
+		join(
+			outputPaths.imageMetadata,
+			`${image.id}_${Date.now()}.json`
+		),
 		JSON.stringify(image),
 		"utf8"
 	);
@@ -97,7 +100,10 @@ export async function downloadImage(
 	}
 	const extension = extname(metadata.representations.full);
 	const writeStream = createWriteStream(
-		join(outputPaths.images, `${metadata.id}${extension}`)
+		join(
+			outputPaths.images,
+			`${metadata.id}_${Date.now()}${extension}`
+		)
 	);
 	// @ts-ignore
 	await streamPipeline(image.body, writeStream);
